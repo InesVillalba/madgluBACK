@@ -38,4 +38,14 @@ router.get('/:idRestaurant', (req, res) => {
     })
 })
 
+router.post('/filtered', (req,res) => {
+    console.log(req.body.filters)
+    modelRestaurants.filter(req.body.filters, (err, rows) => {
+        if(err) return console.log(err);
+        console.log(rows)
+        res.json(rows);
+
+    })
+})
+
 module.exports = router;

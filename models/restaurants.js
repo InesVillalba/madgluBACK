@@ -49,7 +49,13 @@ exports.getCheckedFilters = (done) => {
     })
 }
 
-exports.filter = (done) => {
-    db.get().query('SELECT * FROM restaurants WHERE ')
+exports.filter = (arrFilters, done) => {
+    db.get().query('select r.id, r.name, r.description, r.area, r.address, GROUP_CONCAT(c.name SEPARATOR ",") as tags from restaurants r'
+    +' inner join rest_tags rt on r.id = rt.id_rest'
+    +' inner join categorie c on c.id = rt.id_categorie'
+    +' where r.id in (select id_rest from rest_tags where rest_tags.id_categorie in (?))'
+    +' group by 1,2,3,4,5', [arrFilters], (err, rows) => {
+        if(err) return done(err.message);
+        done(null, rows);
+    })
 }
-
