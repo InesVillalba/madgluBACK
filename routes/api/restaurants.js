@@ -24,22 +24,10 @@ router.get('/areas', (req, res) => {
     })
 })
 
-/*
-// GET http://localhost:3000/api/restaurants/filter?areas=Arganzuela,Centro&categories=cafe,italiano
-router.get('/filter', (req, res) => {    
-    //console.log("FILTER: "+req.params);
-    
-    //let myAreas = req.param.filters.areas === "" ? null : req.param.filters.areas;
-    //let myCategories = req.param.filters.caregories === "" ? null : req.param.filters.categories;
-
-    modelRestaurants.getFilteredRestaurants("'Arganzuela','Centro'", "'cafe','italiano'", (err, rows) => {
-        if(err) console.log('No se ha encontrado un restaurante con ese ID');
-        if(rows.length == 1){
-            res.json(rows);
-        }
-    })
+router.post('/filter', (req, res) => {
+    console.log(req.body);
 })
-*/
+
 // GET http://localhost:3000/api/restaurants/3
 router.get('/:idRestaurant', (req, res) => {
     modelRestaurants.getById(req.params.idRestaurant, (err, rows) => {
