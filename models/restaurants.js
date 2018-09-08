@@ -43,7 +43,7 @@ exports.getById = (idRestaurant, done) => {
 }
 
 exports.getCheckedFilters = (done) => {
-    db.get().quiery('SELECT * FROM checkedFilters', (err, rows) => {
+    db.get().query('SELECT * FROM checkedFilters', (err, rows) => {
         if(err) return done(err.message);
         done(null, rows);
     })
