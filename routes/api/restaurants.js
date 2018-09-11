@@ -24,9 +24,6 @@ router.get('/areas', (req, res) => {
     })
 })
 
-router.post('/filter', (req, res) => {
-    console.log(req.body);
-})
 
 // GET http://localhost:3000/api/restaurants/3
 router.get('/:idRestaurant', (req, res) => {
@@ -38,13 +35,13 @@ router.get('/:idRestaurant', (req, res) => {
     })
 })
 
+// POST http://localhost:3000/api/restaurants/filtered
 router.post('/filtered', (req,res) => {
-    console.log(req.body.filters)
-    modelRestaurants.filter(req.body.filters, (err, rows) => {
+    //console.log(req.body)
+    modelRestaurants.filter(req.body, (err, rows) => {
         if(err) return console.log(err);
         console.log(rows)
         res.json(rows);
-
     })
 })
 
