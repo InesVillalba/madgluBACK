@@ -11,8 +11,15 @@ exports.newUser = ({username, password, mail}, done) => {
 
 exports.getUser = ({username, password}, done) => {
     password = md5(password);
-    db.get().query('SELECT * FROM users where username = ? AND pswd = ?', [username, password], (err,rows) => {
+    db.get().query('SELECT * FROM users WHERE username = ? AND pswd = ?', [username, password], (err,rows) => {
         if(err) return done(err.message);
         done(null, rows);
     })
 };
+
+exports.saveFavorite = ({restId, userId}, done) => {
+    db.get().query('INSERT INTO user_favs VALUES (null, ?, ?)', [restId, userId], (err, rows) => {
+        if(err) return done(err.message);
+        done(null, rows);
+    })
+}

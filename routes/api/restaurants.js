@@ -45,4 +45,14 @@ router.post('/filtered', (req,res) => {
     })
 })
 
+// GET http://localhost:3000/api/restaurants/favorites/13
+router.get('/favorites/:idUser', (req, res) => {
+    console.log(req.params.idUser)
+    modelRestaurants.getFavoriteRestaurants(req.params.idUser, (err, rows) => {
+        if(err) return console.log(err);
+        console.log(rows)
+        res.json(rows);
+    })
+})
+
 module.exports = router;

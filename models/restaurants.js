@@ -104,8 +104,18 @@ exports.filter = (arrFilters, done) => {
         })
     }
 
+}
 
-
+exports.getFavoriteRestaurants = (userId, done) => {
+    db.get().query('SELECT r.id, r.name, r.description, r.area, r.address, GROUP_CONCAT(c.name SEPARATOR ",") as tags FROM restaurants r '
+    +'INNER JOIN rest_tags rt on r.id = rt.id_rest '
+    +'INNER JOIN categorie c on c.id = rt.id_categorie ' 
+    +'WHERE r.id IN (SELECT id_rest FROM user_favs WHERE id_user = ?) '
+    +'GROUP BY 1,2,3,4,5', [userId], (err, rows) => {
+        if(err) return done(err.message);
+        done(null, rows);
+    })
+}
 
 
 
@@ -185,4 +195,4 @@ exports.filter = (arrFilters, done) => {
 
     db.get().query(strQuery, [arrFilters.areas], (err, rows) => {
     */
-}
+
