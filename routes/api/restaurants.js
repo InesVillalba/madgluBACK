@@ -24,13 +24,13 @@ router.get('/areas', (req, res) => {
     })
 })
 
-
 // GET http://localhost:3000/api/restaurants/3
-router.get('/:idRestaurant', (req, res) => {
-    modelRestaurants.getById(req.params.idRestaurant, (err, rows) => {
+router.get('/:idRestaurant', (req, res) => { 
+    modelRestaurants.getById(req.params.idRestaurant, (err, rows) => {       
         if(err) console.log('No se ha encontrado un restaurante con ese ID');
         if(rows.length == 1){
             res.json(rows[0]);
+            
         }
     })
 })

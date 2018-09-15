@@ -35,11 +35,31 @@ exports.getRestAndCategories = (done) => {
     })
 }
 
-exports.getById = (idRestaurant, done) => {
-    db.get().query('SELECT * FROM restaurants WHERE id = ?', [idRestaurant], (err, rows) => {
-        if(err) return done(err.message);
-        done(null, rows);
-    })
+exports.getById = (idResIdUser, done) => {    
+    
+    if(idResIdUser.split(",")[1] == '-1'){               
+        db.get().query('SELECT r.id, r.name, r.description, r.area, r.address, GROUP_CONCAT(c.name SEPARATOR ",") as tags '+
+        'FROM restaurants r '+
+        'inner join rest_tags rt on r.id = rt.id_rest '+
+        'inner join categorie c on c.id = rt.id_categorie '+
+        'WHERE r.id = ? '+
+        'group by 1,2,3,4,5', [idResIdUser.split(",")[0]], (err, rows) => {
+            if(err) return done(err.message);
+            done(null, rows);
+        })
+        
+    }else{              
+        db.get().query("SELECT r.id, r.name, r.description, r.area, r.address, (select count(*) from user_favs where id_user = ? and id_rest = ?) as isFav , GROUP_CONCAT(c.name SEPARATOR ',') as tags "+
+        "FROM restaurants r "+
+        "inner join rest_tags rt on r.id = rt.id_rest "+
+        "inner join categorie c on c.id = rt.id_categorie "+
+        "WHERE r.id = ? "+
+        "group by 1,2,3,4,5,6", [idResIdUser.split(",")[1], idResIdUser.split(",")[0], idResIdUser.split(",")[0]], (err, rows) => {
+            if(err) return done(err.message);
+            done(null, rows);
+        })
+    }
+    
 }
 
 exports.getCheckedFilters = (done) => {

@@ -23,3 +23,10 @@ exports.saveFavorite = ({restId, userId}, done) => {
         done(null, rows);
     })
 }
+
+exports.removeFavorite = ({restId, userId}, done) => {
+    db.get().query('DELETE FROM user_favs WHERE id_rest = ? and id_user = ?', [restId, userId], (err, rows) => {
+        if(err) return done(err.message);
+        done(null, rows);
+    })
+}

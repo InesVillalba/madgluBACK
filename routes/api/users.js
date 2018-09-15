@@ -24,4 +24,11 @@ router.post('/favorites', (req, res) => {
     })
 })
 
+router.post('/delfav', (req, res) => {
+    modelUsers.removeFavorite(req.body, (err, rows) => {
+        console.log(err);
+        res.json(rows);
+    })
+})
+
 module.exports = router;
