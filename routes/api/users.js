@@ -31,4 +31,11 @@ router.post('/delfav', (req, res) => {
     })
 })
 
+router.post('/deluser', (req, res) => {
+    modelUsers.removeUser(req.body, (err, rows) => {
+        console.log(err);
+        res.json(rows);
+    })
+})
+
 module.exports = router;
