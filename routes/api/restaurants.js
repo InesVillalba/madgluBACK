@@ -55,4 +55,19 @@ router.get('/favorites/:idUser', (req, res) => {
     })
 })
 
+// POST http://localhost:3000/api/restaurants/addcomentario
+router.post('/addcomentario', (req, res) => {
+    modelRestaurants.addReview(req.body, (err, rows) => {
+        console.log(err);
+        res.json(rows);
+    })
+})
+
+// GET http://localhost:3000/api/restaurants/comentarios/1
+router.get('/comentarios/:idRestaurant', (req, res) => { 
+    modelRestaurants.getReviews(req.params.idRestaurant, (err, rows) => {       
+        if(err) console.log('No se ha encontrado ningún comentario para este restaurante');
+        res.json(rows);            
+    })
+})
 module.exports = router;

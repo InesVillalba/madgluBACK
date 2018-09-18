@@ -141,8 +141,20 @@ exports.getFavoriteRestaurants = (userId, done) => {
 
 
 
+exports.addReview = ({id_user, title, review}, done) => {
+    db.get().query('INSERT INTO rest_reviews VALUES (null, ?, ?, ?, ?, ?)' , [id_user, 1, title, review, new Date()], (err, rows) => {
+        if(err) return done(err.message);
+        done(null, rows);
+    })
+}
 
 
+exports.getReviews = (idRest, done) => {  
+    db.get().query('select u.username, u.avatar, r.* from users u inner join rest_reviews r on u.id = r.id_user where id_rest = ?', [idRest], (err, rows) => {
+        if(err) return done(err.message);
+        done(null, rows);
+    })       
+}
 
 
 
